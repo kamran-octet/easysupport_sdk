@@ -1,7 +1,7 @@
-name: easy_support_flutter
+name: easysupport_sdk
 description: "Easy Support Flutter SDK with channel bootstrap, customer session, and real-time chat."
 version: 0.0.4+1
-repository: https://github.com/NoumanHabibOctet/easy_support_flutter.git
+repository: https://github.com/kamran-octet/easysupport_sdk
 
 environment:
   sdk: ">=3.5.0 <4.0.0"

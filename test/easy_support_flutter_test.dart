@@ -1,11 +1,11 @@
-import 'package:easy_support_flutter/src/models/easy_support_channel_configuration.dart';
-import 'package:easy_support_flutter/src/models/easy_support_chat_messages_response.dart';
-import 'package:easy_support_flutter/src/models/easy_support_config.dart';
-import 'package:easy_support_flutter/src/models/easy_support_customer_action.dart';
-import 'package:easy_support_flutter/src/models/easy_support_customer_response.dart';
-import 'package:easy_support_flutter/src/models/easy_support_customer_result.dart';
-import 'package:easy_support_flutter/src/models/easy_support_customer_session.dart';
-import 'package:easy_support_flutter/src/models/easy_support_customer_submission.dart';
+import 'package:easysupport_sdk/src/models/easy_support_channel_configuration.dart';
+import 'package:easysupport_sdk/src/models/easy_support_chat_messages_response.dart';
+import 'package:easysupport_sdk/src/models/easy_support_config.dart';
+import 'package:easysupport_sdk/src/models/easy_support_customer_action.dart';
+import 'package:easysupport_sdk/src/models/easy_support_customer_response.dart';
+import 'package:easysupport_sdk/src/models/easy_support_customer_result.dart';
+import 'package:easysupport_sdk/src/models/easy_support_customer_session.dart';
+import 'package:easysupport_sdk/src/models/easy_support_customer_submission.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

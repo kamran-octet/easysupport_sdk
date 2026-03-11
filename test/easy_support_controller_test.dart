@@ -1,12 +1,12 @@
-import 'package:easy_support_flutter/src/easy_support_controller.dart';
-import 'package:easy_support_flutter/src/easy_support_repository.dart';
-import 'package:easy_support_flutter/src/easy_support_retry_scheduler.dart';
-import 'package:easy_support_flutter/src/models/easy_support_channel_configuration.dart';
-import 'package:easy_support_flutter/src/models/easy_support_chat_messages_response.dart';
-import 'package:easy_support_flutter/src/models/easy_support_config.dart';
-import 'package:easy_support_flutter/src/models/easy_support_customer_action.dart';
-import 'package:easy_support_flutter/src/models/easy_support_customer_response.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:easysupport_sdk/src/easy_support_controller.dart';
+import 'package:easysupport_sdk/src/easy_support_repository.dart';
+import 'package:easysupport_sdk/src/easy_support_retry_scheduler.dart';
+import 'package:easysupport_sdk/src/models/easy_support_channel_configuration.dart';
+import 'package:easysupport_sdk/src/models/easy_support_chat_messages_response.dart';
+import 'package:easysupport_sdk/src/models/easy_support_config.dart';
+import 'package:easysupport_sdk/src/models/easy_support_customer_action.dart';
+import 'package:easysupport_sdk/src/models/easy_support_customer_response.dart';
+import 'package:easysupport_sdk/flutter_test.dart';
 
 void main() {
   const config = EasySupportConfig(
