@@ -145,6 +145,9 @@ class EasySupportDioRepository implements EasySupportRepository {
 
     try {
       debugPrint('EasySupport customer headers: $headers');
+      debugPrint('EasySupport customer body: $body');
+      debugPrint('EasySupport customer call: ${config.toJson()}');
+
       _dio.options.headers.addAll(headers);
       final response = await _dio.post<dynamic>(
         uri.toString(),
