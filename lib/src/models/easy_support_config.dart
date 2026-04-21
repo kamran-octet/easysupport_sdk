@@ -27,9 +27,13 @@ class EasySupportConfig {
   const EasySupportConfig.essentials({
     required String baseUrl,
     required String channelToken,
+    String? name,
+    String? email,
   }) : this(
           baseUrl: baseUrl,
           channelToken: channelToken,
+          name: name,
+          email: email,
         );
 
   factory EasySupportConfig.fromJson(Map<String, dynamic> json) {
@@ -137,6 +141,14 @@ class EasySupportConfig {
   }
 
   String get normalizedBaseUrl => '${_stripTrailingSlashes(baseUrl)}/';
+
+  String get defaultGreetingTitle {
+    final normalizedName = name?.trim();
+    if (normalizedName == null || normalizedName.isEmpty) {
+      return 'Hi there ! How can we help you';
+    }
+    return 'Hi $normalizedName ! How can we help you';
+  }
 
   String get normalizedApiBaseUrl {
     final value = apiBaseUrl;

@@ -19,6 +19,35 @@ void main() {
     expect(config.normalizedApiBaseUrl, 'https://api.example.com/api/v1');
   });
 
+  test('builds default greeting title from optional name', () {
+    const namedConfig = EasySupportConfig.essentials(
+      baseUrl: 'https://api.example.com',
+      channelToken: 'api_test_123',
+      name: 'John Doe',
+    );
+    const unnamedConfig = EasySupportConfig.essentials(
+      baseUrl: 'https://api.example.com',
+      channelToken: 'api_test_123',
+    );
+
+    expect(namedConfig.defaultGreetingTitle, 'Hi John Doe ! How can we help you');
+    expect(unnamedConfig.defaultGreetingTitle, 'Hi there ! How can we help you');
+  });
+
+  test('essentials supports optional name and email', () {
+    const config = EasySupportConfig.essentials(
+      baseUrl: 'https://api.example.com',
+      channelToken: 'api_test_123',
+      name: 'John Doe',
+      email: 'john@example.com',
+    );
+
+    expect(config.baseUrl, 'https://api.example.com');
+    expect(config.channelToken, 'api_test_123');
+    expect(config.name, 'John Doe');
+    expect(config.email, 'john@example.com');
+  });
+
   test('creates js options with required values', () {
     const config = EasySupportConfig(
       baseUrl: 'https://api.example.com',

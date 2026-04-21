@@ -96,7 +96,7 @@ class _EasySupportViewState extends State<EasySupportView> {
     final title = channel?.name ?? 'Support';
     final heading = channel?.welcomeHeading ??
         widget.config.widgetTitle ??
-        'Hi there ! How can we help you';
+        widget.config.defaultGreetingTitle;
     final tagline = channel?.welcomeTagline ??
         channel?.details ??
         'We make it simple to connect with us.';
