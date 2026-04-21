@@ -247,6 +247,26 @@ void main() {
     expect(EasySupportCustomerAction.update.toJson(), 'update');
   });
 
+  test('request body omits name and email when they are not provided', () {
+    const submission = EasySupportCustomerSubmission(
+      customerId: 'customer_1',
+    );
+
+    expect(
+      submission.toRequestBody(action: EasySupportCustomerAction.update),
+      <String, dynamic>{
+        'id': 'customer_1',
+        'customer_id': 'customer_1',
+      },
+    );
+    expect(
+      const EasySupportCustomerSubmission().toRequestBody(
+        action: EasySupportCustomerAction.create,
+      ),
+      <String, dynamic>{},
+    );
+  });
+
   test('channel models support toJson and fromJson', () {
     final response = EasySupportChannelKeyResponse.fromJson(<String, dynamic>{
       'success': true,
