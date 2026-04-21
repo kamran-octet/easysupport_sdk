@@ -311,7 +311,22 @@ class _EasySupportViewState extends State<EasySupportView> {
     });
 
     try {
-      final submission = _buildConversationSubmission(form: form);
+      final submission = EasySupportCustomerSubmission(
+        customerId: _session.customerId,
+        name: showForm && form?.isNameEnabled == true
+            ? _nameController.text
+            : !showForm
+                ? widget.config.name
+                : null,
+        email: showForm && form?.isEmailEnabled == true
+            ? _emailController.text
+            : !showForm
+                ? widget.config.email
+                : null,
+        phone: showForm && form?.isPhoneEnabled == true
+            ? _phoneController.text
+            : null,
+      );
 
       final session = await _conversationController.startConversation(
         config: widget.config,
@@ -343,49 +358,6 @@ class _EasySupportViewState extends State<EasySupportView> {
         });
       }
     }
-  }
-
-  EasySupportCustomerSubmission _buildConversationSubmission({
-    required EasySupportChatFormConfiguration? form,
-  }) {
-    return EasySupportCustomerSubmission(
-      customerId: _session.customerId,
-      name: _resolveSubmissionValue(
-        controller: _nameController,
-        fallback: widget.config.name,
-        fieldEnabled: form?.isNameEnabled == true,
-        userEdited: _hasUserEditedName,
-      ),
-      email: _resolveSubmissionValue(
-        controller: _emailController,
-        fallback: widget.config.email,
-        fieldEnabled: form?.isEmailEnabled == true,
-        userEdited: _hasUserEditedEmail,
-      ),
-      phone: form?.isPhoneEnabled == true ? _phoneController.text : null,
-    );
-  }
-
-  String? _resolveSubmissionValue({
-    required TextEditingController controller,
-    required String? fallback,
-    required bool fieldEnabled,
-    required bool userEdited,
-  }) {
-    if (!fieldEnabled) {
-      return fallback;
-    }
-
-    final controllerValue = controller.text.trim();
-    if (controllerValue.isNotEmpty) {
-      return controllerValue;
-    }
-
-    if (!userEdited) {
-      return fallback;
-    }
-
-    return null;
   }
 
   bool _areRequiredFieldsFilled({
