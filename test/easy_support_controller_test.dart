@@ -6,7 +6,7 @@ import 'package:easysupport_sdk/src/models/easy_support_chat_messages_response.d
 import 'package:easysupport_sdk/src/models/easy_support_config.dart';
 import 'package:easysupport_sdk/src/models/easy_support_customer_action.dart';
 import 'package:easysupport_sdk/src/models/easy_support_customer_response.dart';
-import 'package:easysupport_sdk/flutter_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   const config = EasySupportConfig(
@@ -100,6 +100,16 @@ class _FakeSuccessRepository implements EasySupportRepository {
   }) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<String> uploadCustomerMedia({
+    required EasySupportConfig config,
+    required String workspaceId,
+    required String filePath,
+    required String fileName,
+  }) {
+    throw UnimplementedError();
+  }
 }
 
 class _FakeFailureRepository implements EasySupportRepository {
@@ -145,6 +155,16 @@ class _FakeFailureRepository implements EasySupportRepository {
   Future<void> submitFeedback({
     required EasySupportConfig config,
     required Map<String, dynamic> body,
+  }) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> uploadCustomerMedia({
+    required EasySupportConfig config,
+    required String workspaceId,
+    required String filePath,
+    required String fileName,
   }) {
     throw UnimplementedError();
   }
@@ -204,6 +224,16 @@ class _FakeNetworkThenSuccessRepository implements EasySupportRepository {
   Future<void> submitFeedback({
     required EasySupportConfig config,
     required Map<String, dynamic> body,
+  }) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> uploadCustomerMedia({
+    required EasySupportConfig config,
+    required String workspaceId,
+    required String filePath,
+    required String fileName,
   }) {
     throw UnimplementedError();
   }

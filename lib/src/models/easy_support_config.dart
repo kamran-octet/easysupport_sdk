@@ -6,6 +6,8 @@ class EasySupportConfig {
     required this.channelToken,
     this.apiBaseUrl,
     this.channelKey,
+    this.name,
+    this.email,
     this.widgetTitle,
     this.webViewUrl,
     this.autoOpen = true,
@@ -50,6 +52,8 @@ class EasySupportConfig {
       channelKey: json['channelkey'] as String? ??
           json['channel_key'] as String? ??
           json['channelKey'] as String?,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
       widgetTitle:
           json['widget_title'] as String? ?? json['widgetTitle'] as String?,
       webViewUrl:
@@ -89,6 +93,8 @@ class EasySupportConfig {
   final String channelToken;
   final String? apiBaseUrl;
   final String? channelKey;
+  final String? name;
+  final String? email;
   final String? widgetTitle;
   final String? webViewUrl;
   final bool autoOpen;
@@ -110,6 +116,8 @@ class EasySupportConfig {
       'channel_token': channelToken,
       if (apiBaseUrl != null) 'api_base_url': apiBaseUrl,
       if (channelKey != null) 'channelkey': channelKey,
+      if (name != null) 'name': name,
+      if (email != null) 'email': email,
       if (widgetTitle != null) 'widget_title': widgetTitle,
       if (webViewUrl != null) 'web_view_url': webViewUrl,
       'auto_open': autoOpen,
@@ -174,6 +182,8 @@ class EasySupportConfig {
       if (socketAuth.isNotEmpty) 'socketAuth': socketAuth,
       if (channelKey != null && channelKey!.trim().isNotEmpty)
         'channelKey': channelKey!.trim(),
+      if (name != null && name!.trim().isNotEmpty) 'name': name!.trim(),
+      if (email != null && email!.trim().isNotEmpty) 'email': email!.trim(),
       if (widgetTitle != null && widgetTitle!.trim().isNotEmpty)
         'widgetTitle': widgetTitle!.trim(),
       if (webViewUrl != null && webViewUrl!.trim().isNotEmpty)
@@ -189,6 +199,8 @@ class EasySupportConfig {
     String? channelToken,
     String? apiBaseUrl,
     String? channelKey,
+    String? name,
+    String? email,
     String? widgetTitle,
     String? webViewUrl,
     bool? autoOpen,
@@ -209,6 +221,8 @@ class EasySupportConfig {
       channelToken: channelToken ?? this.channelToken,
       apiBaseUrl: apiBaseUrl ?? this.apiBaseUrl,
       channelKey: channelKey ?? this.channelKey,
+      name: name ?? this.name,
+      email: email ?? this.email,
       widgetTitle: widgetTitle ?? this.widgetTitle,
       webViewUrl: webViewUrl ?? this.webViewUrl,
       autoOpen: autoOpen ?? this.autoOpen,

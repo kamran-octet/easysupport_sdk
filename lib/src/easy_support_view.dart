@@ -67,6 +67,7 @@ class _EasySupportViewState extends State<EasySupportView> {
     _emailController.addListener(_onEmailChanged);
     _nameController.addListener(_onNameChanged);
     _phoneController.addListener(_onPhoneChanged);
+    _prefillFieldsFromConfig();
     _loadCustomerSession();
   }
 
@@ -310,12 +311,7 @@ class _EasySupportViewState extends State<EasySupportView> {
     });
 
     try {
-      final submission = EasySupportCustomerSubmission(
-        customerId: _session.customerId,
-        name: form?.isNameEnabled == true ? _nameController.text : null,
-        email: form?.isEmailEnabled == true ? _emailController.text : null,
-        phone: form?.isPhoneEnabled == true ? _phoneController.text : null,
-      );
+      final submission = _buildConversationSubmission(form: form);
 
       final session = await _conversationController.startConversation(
         config: widget.config,
@@ -347,6 +343,21 @@ class _EasySupportViewState extends State<EasySupportView> {
         });
       }
     }
+  }
+
+  EasySupportCustomerSubmission _buildConversationSubmission({
+    required EasySupportChatFormConfiguration? form,
+  }) {
+    return EasySupportCustomerSubmission(
+      customerId: _session.customerId,
+      name: form?.isNameEnabled == true
+          ? _nameController.text
+          : widget.config.name,
+      email: form?.isEmailEnabled == true
+          ? _emailController.text
+          : widget.config.email,
+      phone: form?.isPhoneEnabled == true ? _phoneController.text : null,
+    );
   }
 
   bool _areRequiredFieldsFilled({
@@ -480,39 +491,62 @@ class _EasySupportViewState extends State<EasySupportView> {
   void _prefillFieldsFromCustomer({
     required EasySupportCustomerResult? customer,
   }) {
-    final form = widget.channelConfiguration?.chatForm;
-    final formEnabled =
-        widget.channelConfiguration?.hasActiveForm == true && form != null;
-    if (!formEnabled || customer == null) {
+    if (customer == null) {
       return;
     }
 
-    final email = customer.email?.trim();
-    final name = customer.name?.trim();
-    final phone = customer.phone?.trim();
+    _prefillFields(
+      email: customer.email,
+      name: customer.name,
+      phone: customer.phone,
+    );
+  }
+
+  void _prefillFieldsFromConfig() {
+    _prefillFields(
+      email: widget.config.email,
+      name: widget.config.name,
+    );
+  }
+
+  void _prefillFields({
+    String? email,
+    String? name,
+    String? phone,
+  }) {
+    final form = widget.channelConfiguration?.chatForm;
+    final formEnabled =
+        widget.channelConfiguration?.hasActiveForm == true && form != null;
+    if (!formEnabled) {
+      return;
+    }
+
+    final normalizedEmail = email?.trim();
+    final normalizedName = name?.trim();
+    final normalizedPhone = phone?.trim();
 
     _isApplyingPrefill = true;
     try {
       if (form.isEmailEnabled == true &&
-          email != null &&
-          email.isNotEmpty &&
+          normalizedEmail != null &&
+          normalizedEmail.isNotEmpty &&
           _emailController.text.trim().isEmpty &&
           !_hasUserEditedEmail) {
-        _emailController.text = email;
+        _emailController.text = normalizedEmail;
       }
       if (form.isNameEnabled == true &&
-          name != null &&
-          name.isNotEmpty &&
+          normalizedName != null &&
+          normalizedName.isNotEmpty &&
           _nameController.text.trim().isEmpty &&
           !_hasUserEditedName) {
-        _nameController.text = name;
+        _nameController.text = normalizedName;
       }
       if (form.isPhoneEnabled == true &&
-          phone != null &&
-          phone.isNotEmpty &&
+          normalizedPhone != null &&
+          normalizedPhone.isNotEmpty &&
           _phoneController.text.trim().isEmpty &&
           !_hasUserEditedPhone) {
-        _phoneController.text = phone;
+        _phoneController.text = normalizedPhone;
       }
     } finally {
       _isApplyingPrefill = false;

@@ -23,6 +23,8 @@ void main() {
     const config = EasySupportConfig(
       baseUrl: 'https://api.example.com',
       channelToken: 'api_test_123',
+      name: 'John Doe',
+      email: 'john@example.com',
       autoOpen: false,
       isEmojiEnabled: false,
     );
@@ -35,6 +37,8 @@ void main() {
     expect(options['autoOpen'], false);
     expect(options['isEmojiEnabled'], false);
     expect(options['isMediaEnabled'], true);
+    expect(options['name'], 'John Doe');
+    expect(options['email'], 'john@example.com');
     expect(options['additionalHeaders'], <String, String>{
       'channelkey': 'api_test_123',
     });
@@ -225,12 +229,16 @@ void main() {
     final config = EasySupportConfig.fromJson(<String, dynamic>{
       'base_url': 'https://api.example.com',
       'channel_token': 'api_test_123',
+      'name': 'John Doe',
+      'email': 'john@example.com',
       'additional_headers': <String, dynamic>{'x-test': 1},
     });
 
     final serialized = config.toJson();
     expect(serialized['base_url'], 'https://api.example.com');
     expect(serialized['channel_token'], 'api_test_123');
+    expect(serialized['name'], 'John Doe');
+    expect(serialized['email'], 'john@example.com');
     expect(
       serialized['additional_headers'],
       <String, String>{'x-test': '1'},

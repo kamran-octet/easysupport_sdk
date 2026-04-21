@@ -158,6 +158,16 @@ class _FakeConversationRepository implements EasySupportRepository {
   }) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<String> uploadCustomerMedia({
+    required EasySupportConfig config,
+    required String workspaceId,
+    required String filePath,
+    required String fileName,
+  }) {
+    throw UnimplementedError();
+  }
 }
 
 class _FakeCustomerStorage implements EasySupportCustomerLocalStorage {
