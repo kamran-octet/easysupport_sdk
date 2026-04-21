@@ -327,9 +327,9 @@ class _EasySupportViewState extends State<EasySupportView> {
             ? _phoneController.text
             : null,
       );
-      print(
+      debugPrint(
           'Developer sending Name: ${widget.config.name}, Email: ${widget.config.email}');
-      print(submission.toJson());
+
       final session = await _conversationController.startConversation(
         config: widget.config,
         submission: submission,
