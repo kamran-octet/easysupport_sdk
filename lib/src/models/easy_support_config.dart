@@ -150,6 +150,28 @@ class EasySupportConfig {
     return 'Hi $normalizedName ! How can we help you';
   }
 
+  String resolveGreetingTitle(String? preferredTitle) {
+    final normalizedPreferredTitle = preferredTitle?.trim();
+    if (normalizedPreferredTitle == null || normalizedPreferredTitle.isEmpty) {
+      return defaultGreetingTitle;
+    }
+
+    final normalizedName = name?.trim();
+    if (normalizedName == null || normalizedName.isEmpty) {
+      return normalizedPreferredTitle;
+    }
+
+    final greetingPattern = RegExp(r'hi\s+there', caseSensitive: false);
+    if (greetingPattern.hasMatch(normalizedPreferredTitle)) {
+      return normalizedPreferredTitle.replaceFirst(
+        greetingPattern,
+        'Hi $normalizedName',
+      );
+    }
+
+    return normalizedPreferredTitle;
+  }
+
   String get normalizedApiBaseUrl {
     final value = apiBaseUrl;
     if (value == null || value.trim().isEmpty) {

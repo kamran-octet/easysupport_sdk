@@ -94,9 +94,9 @@ class _EasySupportViewState extends State<EasySupportView> {
         EasySupportColorUtils.blend(primaryColor, Colors.white, 0.12);
 
     final title = channel?.name ?? 'Support';
-    final heading = channel?.welcomeHeading ??
-        widget.config.widgetTitle ??
-        widget.config.defaultGreetingTitle;
+    final heading = widget.config.resolveGreetingTitle(
+      channel?.welcomeHeading ?? widget.config.widgetTitle,
+    );
     final tagline = channel?.welcomeTagline ??
         channel?.details ??
         'We make it simple to connect with us.';
@@ -350,14 +350,42 @@ class _EasySupportViewState extends State<EasySupportView> {
   }) {
     return EasySupportCustomerSubmission(
       customerId: _session.customerId,
-      name: form?.isNameEnabled == true
-          ? _nameController.text
-          : widget.config.name,
-      email: form?.isEmailEnabled == true
-          ? _emailController.text
-          : widget.config.email,
+      name: _resolveSubmissionValue(
+        controller: _nameController,
+        fallback: widget.config.name,
+        fieldEnabled: form?.isNameEnabled == true,
+        userEdited: _hasUserEditedName,
+      ),
+      email: _resolveSubmissionValue(
+        controller: _emailController,
+        fallback: widget.config.email,
+        fieldEnabled: form?.isEmailEnabled == true,
+        userEdited: _hasUserEditedEmail,
+      ),
       phone: form?.isPhoneEnabled == true ? _phoneController.text : null,
     );
+  }
+
+  String? _resolveSubmissionValue({
+    required TextEditingController controller,
+    required String? fallback,
+    required bool fieldEnabled,
+    required bool userEdited,
+  }) {
+    if (!fieldEnabled) {
+      return fallback;
+    }
+
+    final controllerValue = controller.text.trim();
+    if (controllerValue.isNotEmpty) {
+      return controllerValue;
+    }
+
+    if (!userEdited) {
+      return fallback;
+    }
+
+    return null;
   }
 
   bool _areRequiredFieldsFilled({

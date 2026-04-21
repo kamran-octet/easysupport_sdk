@@ -34,6 +34,23 @@ void main() {
     expect(unnamedConfig.defaultGreetingTitle, 'Hi there ! How can we help you');
   });
 
+  test('personalizes generic preferred greeting title with name', () {
+    const config = EasySupportConfig.essentials(
+      baseUrl: 'https://api.example.com',
+      channelToken: 'api_test_123',
+      name: 'John Doe',
+    );
+
+    expect(
+      config.resolveGreetingTitle('Hi there ! How can we help you '),
+      'Hi John Doe ! How can we help you',
+    );
+    expect(
+      config.resolveGreetingTitle('Welcome to support'),
+      'Welcome to support',
+    );
+  });
+
   test('essentials supports optional name and email', () {
     const config = EasySupportConfig.essentials(
       baseUrl: 'https://api.example.com',
