@@ -780,6 +780,7 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
     }
   }
 
+  // dialog for permissions that are permanently denied or limited (iOS 14+), with option to open app settings
   Future<void> _showAttachmentPermissionDialog() async {
     if (!mounted || _isAttachmentPermissionDialogVisible) {
       return;
