@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'easy_support_repository.dart';
 import 'models/easy_support_chat_message.dart';
+import 'models/easy_support_chat_messages_response.dart';
 import 'models/easy_support_config.dart';
 
 enum EasySupportChatStatus {
@@ -16,14 +17,15 @@ class EasySupportChatState {
   const EasySupportChatState({
     required this.status,
     this.messages = const <EasySupportChatMessage>[],
+    this.chatStatus,
     this.error,
   });
 
-  const EasySupportChatState.initial()
-      : this(status: EasySupportChatStatus.initial);
+  const EasySupportChatState.initial() : this(status: EasySupportChatStatus.initial);
 
   final EasySupportChatStatus status;
   final List<EasySupportChatMessage> messages;
+  final ChatStatus? chatStatus;
   final Object? error;
 
   bool get isLoading => status == EasySupportChatStatus.loading;
@@ -61,11 +63,13 @@ class EasySupportChatController extends ValueNotifier<EasySupportChatState> {
       value = EasySupportChatState(
         status: EasySupportChatStatus.ready,
         messages: chronologicalMessages,
+        chatStatus: response.chat?.status,
       );
     } catch (error) {
       value = EasySupportChatState(
         status: EasySupportChatStatus.error,
         messages: value.messages,
+        chatStatus: value.chatStatus,
         error: error,
       );
     }
@@ -106,21 +110,17 @@ class EasySupportChatController extends ValueNotifier<EasySupportChatState> {
     }
 
     final existing = value.messages;
-    if (message.isNotification &&
-        existing.any((item) => _isDuplicateNotification(item, message))) {
+    if (message.isNotification && existing.any((item) => _isDuplicateNotification(item, message))) {
       return;
     }
 
     final incomingId = message.id?.trim();
-    if (incomingId != null &&
-        incomingId.isNotEmpty &&
-        existing.any((item) => item.id == incomingId)) {
+    if (incomingId != null && incomingId.isNotEmpty && existing.any((item) => item.id == incomingId)) {
       return;
     }
 
     // Some socket events come without id; dedupe by semantic fingerprint.
-    if ((incomingId == null || incomingId.isEmpty) &&
-        existing.any((item) => _isSemanticallySameMessage(item, message))) {
+    if ((incomingId == null || incomingId.isEmpty) && existing.any((item) => _isSemanticallySameMessage(item, message))) {
       return;
     }
 
@@ -142,10 +142,7 @@ class EasySupportChatController extends ValueNotifier<EasySupportChatState> {
 
     final existing = value.messages;
     final greetingExists = existing.any(
-      (item) =>
-          (item.content ?? '').trim().toLowerCase() ==
-              normalizedGreeting.toLowerCase() &&
-          (item.chatId ?? '').trim() == normalizedChatId,
+      (item) => (item.content ?? '').trim().toLowerCase() == normalizedGreeting.toLowerCase() && (item.chatId ?? '').trim() == normalizedChatId,
     );
     if (greetingExists) {
       return;
@@ -163,9 +160,7 @@ class EasySupportChatController extends ValueNotifier<EasySupportChatState> {
     );
 
     value = EasySupportChatState(
-      status: value.status == EasySupportChatStatus.initial
-          ? EasySupportChatStatus.ready
-          : value.status,
+      status: value.status == EasySupportChatStatus.initial ? EasySupportChatStatus.ready : value.status,
       messages: <EasySupportChatMessage>[greeting, ...existing],
       error: value.error,
     );

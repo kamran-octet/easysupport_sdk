@@ -1,17 +1,17 @@
 import 'easy_support_chat_message.dart';
 import 'easy_support_chat_messages_page_info.dart';
 
-enum EasySupportChatStatus {
+enum ChatStatus {
   closed('closed'),
   inProgress('in_progress'),
   open('open'),
   unknown('unknown');
 
-  const EasySupportChatStatus(this.value);
+  const ChatStatus(this.value);
 
   final String value;
 
-  static EasySupportChatStatus? fromValue(String? value) {
+  static ChatStatus? fromValue(String? value) {
     if (value == null) {
       return null;
     }
@@ -22,7 +22,7 @@ enum EasySupportChatStatus {
       }
     }
 
-    return EasySupportChatStatus.unknown;
+    return ChatStatus.unknown;
   }
 }
 
@@ -35,12 +35,12 @@ class EasySupportChatSummary {
   factory EasySupportChatSummary.fromJson(Map<String, dynamic> json) {
     return EasySupportChatSummary(
       id: json['id'] as String?,
-      status: EasySupportChatStatus.fromValue(json['status'] as String?),
+      status: ChatStatus.fromValue(json['status'] as String?),
     );
   }
 
   final String? id;
-  final EasySupportChatStatus? status;
+  final ChatStatus? status;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
