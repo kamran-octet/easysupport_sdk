@@ -120,19 +120,27 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
 
   @override
   Widget build(BuildContext context) {
-    final headerStart = EasySupportColorUtils.blend(widget.primaryColor, Colors.black, 0.08);
-    final headerMid = EasySupportColorUtils.blend(widget.primaryColor, Colors.white, 0.06);
-    final headerEnd = EasySupportColorUtils.blend(widget.primaryColor, Colors.black, 0.14);
+    final headerStart =
+        EasySupportColorUtils.blend(widget.primaryColor, Colors.black, 0.08);
+    final headerMid =
+        EasySupportColorUtils.blend(widget.primaryColor, Colors.white, 0.06);
+    final headerEnd =
+        EasySupportColorUtils.blend(widget.primaryColor, Colors.black, 0.14);
     const surfaceColor = Color(0xFFF6F7FA);
-    final inputBorderColor = EasySupportColorUtils.blend(widget.primaryColor, Colors.black, 0.04);
+    final inputBorderColor =
+        EasySupportColorUtils.blend(widget.primaryColor, Colors.black, 0.04);
     final isComposerLocked = _isChatClosedByAgent || _isLeaving;
     final isChatClosed = _controller.value.chatStatus == ChatStatus.closed;
     final isEmojiEnabled = _isEmojiEnabled;
     final isMediaEnabled = _isMediaEnabled;
     final systemUiStyle = SystemUiOverlayStyle(
       statusBarColor: widget.primaryColor,
-      statusBarIconBrightness: widget.onPrimaryColor == Colors.white ? Brightness.light : Brightness.dark,
-      statusBarBrightness: widget.onPrimaryColor == Colors.white ? Brightness.dark : Brightness.light,
+      statusBarIconBrightness: widget.onPrimaryColor == Colors.white
+          ? Brightness.light
+          : Brightness.dark,
+      statusBarBrightness: widget.onPrimaryColor == Colors.white
+          ? Brightness.dark
+          : Brightness.light,
     );
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -151,7 +159,8 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
                   colors: <Color>[headerStart, headerMid, headerEnd],
                   stops: const <double>[0.0, 0.55, 1.0],
                 ),
-                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(20)),
                 boxShadow: <BoxShadow>[
                   BoxShadow(
                     color: Colors.black.withOpacity(0.08),
@@ -201,7 +210,8 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
                       return const Center(child: CircularProgressIndicator());
                     }
 
-                    if (state.status == EasySupportChatStatus.error && state.messages.isEmpty) {
+                    if (state.status == EasySupportChatStatus.error &&
+                        state.messages.isEmpty) {
                       return Center(
                         child: Text(
                           'Failed to load messages',
@@ -228,6 +238,7 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
               ),
             ),
             Container(
+              width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: const BorderRadius.vertical(
@@ -256,9 +267,12 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
                         ignoring: isComposerLocked,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: isComposerLocked ? const Color(0xFFE5E7EB) : Colors.white,
+                            color: isComposerLocked
+                                ? const Color(0xFFE5E7EB)
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(28),
-                            border: Border.all(color: inputBorderColor, width: 2),
+                            border:
+                                Border.all(color: inputBorderColor, width: 2),
                           ),
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Row(
@@ -268,7 +282,9 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
                                   controller: _messageController,
                                   enabled: !isComposerLocked,
                                   style: TextStyle(
-                                    color: isComposerLocked ? const Color(0xFF6B7280) : const Color(0xFF111827),
+                                    color: isComposerLocked
+                                        ? const Color(0xFF6B7280)
+                                        : const Color(0xFF111827),
                                   ),
                                   textInputAction: TextInputAction.send,
                                   onSubmitted: (_) => _sendMessage(),
@@ -276,79 +292,96 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
                                     border: InputBorder.none,
                                     hintText: 'Type your message',
                                     hintStyle: TextStyle(
-                                      color: isComposerLocked ? const Color(0xFF9CA3AF) : const Color(0xFF9CA3AF),
+                                      color: isComposerLocked
+                                          ? const Color(0xFF9CA3AF)
+                                          : const Color(0xFF9CA3AF),
                                     ),
                                   ),
                                 ),
                               ),
                               if (isMediaEnabled) ...[
                                 IconButton(
-                                  onPressed: isComposerLocked || _isUploadingMedia ? null : _onAttachmentPressed,
+                                  onPressed:
+                                      isComposerLocked || _isUploadingMedia
+                                          ? null
+                                          : _onAttachmentPressed,
                                   icon: _isUploadingMedia
                                       ? SizedBox(
                                           width: 18,
                                           height: 18,
                                           child: CircularProgressIndicator(
                                             strokeWidth: 2,
-                                            valueColor: AlwaysStoppedAnimation<Color>(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
                                               Colors.grey.shade600,
                                             ),
                                           ),
                                         )
                                       : Icon(
                                           Icons.attach_file_rounded,
-                                          color: isComposerLocked ? Colors.grey.shade400 : Colors.grey.shade600,
+                                          color: isComposerLocked
+                                              ? Colors.grey.shade400
+                                              : Colors.grey.shade600,
                                         ),
                                 ),
                                 const SizedBox(width: 8),
                               ],
                               if (isEmojiEnabled) ...[
                                 IconButton(
-                                  onPressed: isComposerLocked ? null : _openEmojiPicker,
+                                  onPressed: isComposerLocked
+                                      ? null
+                                      : _openEmojiPicker,
                                   icon: Icon(
                                     Icons.sentiment_satisfied,
-                                    color: isComposerLocked ? Colors.grey.shade400 : Colors.grey.shade600,
+                                    color: isComposerLocked
+                                        ? Colors.grey.shade400
+                                        : Colors.grey.shade600,
                                   ),
                                 ),
                                 const SizedBox(width: 8),
                               ],
                               IconButton(
-                                onPressed: isComposerLocked || _isSending || _messageController.text.trim().isEmpty ? null : _sendMessage,
+                                onPressed: isComposerLocked ||
+                                        _isSending ||
+                                        _messageController.text.trim().isEmpty
+                                    ? null
+                                    : _sendMessage,
                                 icon: _isSending
                                     ? SizedBox(
                                         width: 18,
                                         height: 18,
                                         child: CircularProgressIndicator(
                                           strokeWidth: 2,
-                                          valueColor: AlwaysStoppedAnimation<Color>(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
                                             Colors.grey.shade600,
                                           ),
                                         ),
                                       )
                                     : Icon(
                                         Icons.send_rounded,
-                                        color: _messageController.text.trim().isEmpty ? Colors.grey.shade400 : Colors.grey.shade700,
+                                        color: _messageController.text
+                                                .trim()
+                                                .isEmpty
+                                            ? Colors.grey.shade400
+                                            : Colors.grey.shade700,
                                       ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                    )
-                  else
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                      child: Text(
-                        'Text chat is closed',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF6B7280),
-                        ),
+                    ),
+                  if (_isChatClosedByAgent || isChatClosed) ...[
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Chat is closed by agent.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF6B7280),
                       ),
                     ),
-                  if (_isChatClosedByAgent) ...[
-                    const SizedBox(height: 8),
                   ],
                   const SizedBox(height: 4),
                   const Text(
@@ -411,12 +444,18 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
       );
     }
 
-    final isCustomerMessage = message.customerId != null && message.customerId!.trim().isNotEmpty && message.customerId == widget.session.customerId;
+    final isCustomerMessage = message.customerId != null &&
+        message.customerId!.trim().isNotEmpty &&
+        message.customerId == widget.session.customerId;
 
-    final alignment = isCustomerMessage ? Alignment.centerRight : Alignment.centerLeft;
-    final bubbleColor = isCustomerMessage ? widget.primaryColor : const Color(0xFFF3F4F6);
-    final textColor = isCustomerMessage ? Colors.white : const Color(0xFF374151);
-    final border = isCustomerMessage ? null : Border.all(color: const Color(0xFFE5E7EB));
+    final alignment =
+        isCustomerMessage ? Alignment.centerRight : Alignment.centerLeft;
+    final bubbleColor =
+        isCustomerMessage ? widget.primaryColor : const Color(0xFFF3F4F6);
+    final textColor =
+        isCustomerMessage ? Colors.white : const Color(0xFF374151);
+    final border =
+        isCustomerMessage ? null : Border.all(color: const Color(0xFFE5E7EB));
     final isMediaMessage = (message.type ?? '').trim().toLowerCase() == 'media';
 
     return Align(
@@ -587,7 +626,10 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
 
     final chatId = widget.session.chatId;
     final customerId = widget.session.customerId;
-    if (chatId == null || chatId.trim().isEmpty || customerId == null || customerId.trim().isEmpty) {
+    if (chatId == null ||
+        chatId.trim().isEmpty ||
+        customerId == null ||
+        customerId.trim().isEmpty) {
       return;
     }
 
@@ -630,7 +672,10 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
   }
 
   Future<void> _onAttachmentPressed() async {
-    if (_isUploadingMedia || _isAttachmentPermissionRequestInProgress || !_isMediaEnabled || _isChatClosedByAgent) {
+    if (_isUploadingMedia ||
+        _isAttachmentPermissionRequestInProgress ||
+        !_isMediaEnabled ||
+        _isChatClosedByAgent) {
       debugPrint(
         'EasySupport attach skipped | '
         'isUploading=$_isUploadingMedia isMediaEnabled=$_isMediaEnabled '
@@ -669,7 +714,10 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
     final chatId = widget.session.chatId;
     final customerId = widget.session.customerId;
     final workspaceId = widget.channelConfiguration?.workspaceId?.trim();
-    if (chatId == null || chatId.trim().isEmpty || customerId == null || customerId.trim().isEmpty) {
+    if (chatId == null ||
+        chatId.trim().isEmpty ||
+        customerId == null ||
+        customerId.trim().isEmpty) {
       debugPrint(
         'EasySupport attach failed: missing chat/customer '
         'chatId=$chatId customerId=$customerId',
@@ -1082,11 +1130,16 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
     }
   }
 
-  bool get _isFeedbackEnabled => widget.channelConfiguration?.isFeedbackEnabled == true;
+  bool get _isFeedbackEnabled =>
+      widget.channelConfiguration?.isFeedbackEnabled == true;
 
-  bool get _isEmojiEnabled => widget.channelConfiguration?.isEmojiEnabled ?? widget.config.isEmojiEnabled;
+  bool get _isEmojiEnabled =>
+      widget.channelConfiguration?.isEmojiEnabled ??
+      widget.config.isEmojiEnabled;
 
-  bool get _isMediaEnabled => widget.channelConfiguration?.isMediaEnabled ?? widget.config.isMediaEnabled;
+  bool get _isMediaEnabled =>
+      widget.channelConfiguration?.isMediaEnabled ??
+      widget.config.isMediaEnabled;
 
   Future<EasySupportFeedbackSubmission?> _collectFeedbackIfEnabled({
     bool isDismissible = true,
@@ -1096,8 +1149,10 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
       return null;
     }
 
-    final feedbackDisplayType = (widget.channelConfiguration?.feedbackDisplayType ?? '').toLowerCase();
-    final showStars = feedbackDisplayType.isEmpty || feedbackDisplayType == 'star';
+    final feedbackDisplayType =
+        (widget.channelConfiguration?.feedbackDisplayType ?? '').toLowerCase();
+    final showStars =
+        feedbackDisplayType.isEmpty || feedbackDisplayType == 'star';
 
     return showModalBottomSheet<EasySupportFeedbackSubmission>(
       context: context,
@@ -1240,7 +1295,10 @@ class _EasySupportChatViewState extends State<EasySupportChatView> {
   Future<void> _connectChatSocketInternal() async {
     final chatId = widget.session.chatId;
     final customerId = widget.session.customerId;
-    if (chatId == null || chatId.trim().isEmpty || customerId == null || customerId.trim().isEmpty) {
+    if (chatId == null ||
+        chatId.trim().isEmpty ||
+        customerId == null ||
+        customerId.trim().isEmpty) {
       return;
     }
 
